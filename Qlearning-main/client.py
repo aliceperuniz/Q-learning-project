@@ -1,6 +1,6 @@
 import connection
 
-conexao = connection.connect()
+conexao = connection.connect(2037)
 
 act = ["jump", "left", "right"]
 
