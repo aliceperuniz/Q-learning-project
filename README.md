@@ -1,15 +1,17 @@
-Projeto Q-learning:
-O que vai ser dado:
+<h1>Projeto Q-learning:</h1>
+<h3>O que vai ser dado:</h3>
+
 Para esse projeto, será disponibilizado: (1) um arquivo .exe que contém o jogo; (2) um projeto
 em python no GitHub que contém um arquivo chamado connection.py (i.e., a conexão com o
 servidor local do jogo) e um outro arquivo chamado client.py, que será onde vocês irão
 implementar o algoritmo de vocês.
-Objetivo do jogo:
+
+<h3>Objetivo do jogo:</h3>
 Neste jogo controlamos o personagem Amongois, que terá que passar por diversas
 plataformas para chegar no seu objetivo final que é o bloco preto. Para isso ele pode fazer 3
 movimentos, sendo eles, girar para a esquerda, girar para a direita e pular para a frente.
 
-Objetivo do projeto:
+<h3>Objetivo do projeto:</h3>
 O objetivo do projeto é implementar o algoritmo Q-Learning para aprender o trajeto que deve
 ser tomado pelo Amongois no jogo.
 Como conectar o seu algoritmo ao jogo:
@@ -21,7 +23,7 @@ Após realizada a conexão, a comunicação irá se dar pela função get_state_
 função recebe a ação que deve ser feita pelo personagem e o socket recebido na função
 connect(), e terá como retorno, o estado atual e a recompensa.
 
-Exemplo:
+-> Exemplo:
 
 Como é o formato das informações enviadas para o
 jogo:
