@@ -14,7 +14,8 @@ movimentos, sendo eles, girar para a esquerda, girar para a direita e pular para
 <h3>Objetivo do projeto:</h3>
 O objetivo do projeto é implementar o algoritmo Q-Learning para aprender o trajeto que deve
 ser tomado pelo Amongois no jogo.
-Como conectar o seu algoritmo ao jogo:
+
+<h3>Como conectar o seu algoritmo ao jogo:</h3>
 Para que haja uma comunicação entre o algoritmo e o jogo, vocês irão inicialmente importar o
 connection.py para o client.py (local onde vocês irão implementar o algoritmo). Para vocês
 iniciarem a conexão, devem chamar a função connect() que irá retornar o socket com a
@@ -23,29 +24,32 @@ Após realizada a conexão, a comunicação irá se dar pela função get_state_
 função recebe a ação que deve ser feita pelo personagem e o socket recebido na função
 connect(), e terá como retorno, o estado atual e a recompensa.
 
--> Exemplo:
+<b>-> Exemplo:<b>
 
-Como é o formato das informações enviadas para o
-jogo:
+<h3>Como é o formato das informações enviadas para o
+jogo:</h3>
+
 A informação para cada ação é representada por uma string correspondente:
 &quot;left&quot; = Girar para a Esquerda
 &quot;right&quot; = Girar para a Direita
 &quot;jump&quot; = Pular para a Frente
-Como jogar
+<h3>Como jogar</h3>
 Você pode jogar manualmente ou você pode controlar o jogo da forma descrita acima.
+
 ● Jogando manualmente
 É só utilizar as setas de direita e esquerda para mudar a direção e a barra de espaço
 para pular para a frente.
 
 Obs.: tecnicamente você pode usar a seta para a frente para andar nesse sentido, mas
 ela anula o não-determinismo dessa ação.
+
 ● Atalhos de teclado
 ○ 1: aumenta a velocidade do Amongois (cuidado para não acelerar muito e
 exigir demais da sua máquina).
 ○ 2: diminui a velocidade do Amongois.
 ○ 3 a 7: tamanhos progressivamente menores de tela.
 
-Como é o formato das informações recebidas pelo jogo:
+<h3>Como é o formato das informações recebidas pelo jogo:</h3>
 ● Para o Estado:
 Um estado é representado como um vetor binário que concatena a informação de que
 plataforma o personagem se encontra e para qual sentido ele está virado. Como são
