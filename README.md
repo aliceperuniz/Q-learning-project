@@ -24,7 +24,6 @@ Após realizada a conexão, a comunicação irá se dar pela função get_state_
 função recebe a ação que deve ser feita pelo personagem e o socket recebido na função
 connect(), e terá como retorno, o estado atual e a recompensa.
 
-<b>-> Exemplo:<b>
 
 <h3>Como é o formato das informações enviadas para o
 jogo:</h3>
