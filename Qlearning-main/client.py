@@ -96,16 +96,34 @@ class Qlearning:
         else:
             return self.getBestAction(pos) #ação com maior recompensa
         
-    def updateQ(self, oldpos, action, newpos, reward):
-        self.qtable[oldpos[0]][oldpos[1]][action] += self.alpha * (reward + self.gamma * self.getMaxQ(newpos) - self.qtable[oldpos[0]][oldpos[1]][action])
+    def updateQ(self, oldpos, action, newpos, reward, final):
+        if final:
+            self.qtable[oldpos[0]][oldpos[1]][action] += self.alpha * (reward - self.qtable[oldpos[0]][oldpos[1]][action])
+        else:
+            self.qtable[oldpos[0]][oldpos[1]][action] += self.alpha * (reward + self.gamma * self.getMaxQ(newpos) - self.qtable[oldpos[0]][oldpos[1]][action])
 
 act = ["jump", "left", "right"]
 
-while (True):
-    estado, recompensa = connection.get_state_reward(conexao, act[0])
-    print("Estado: ", estado)
-    print("Recompensa: ", recompensa)
-    
-    plataforma, direcao = int(estado[:7], 2),int(estado[:7], 2)
-    print("Plataforma: ", plataforma)
-    print("Direcao: ", direcao)
+largura = int(input("Digite a largura do mapa: "))
+altura = int(input("Digite a altura do mapa: "))
+mapinha = mapa(w = largura, h = altura)
+episodes = int(input("Digite o número de episódios: "))
+q = Qlearning(w = largura, h = altura, epsilon = 0, alpha = 1, init = 100)
+for i in range(episodes):
+    action = mapinha.reset()
+    final = False
+    while not final:
+        action = q.getAction(action)
+        newaction, reward, final = mapinha.act(action)
+        q.updateQ(action, action, newaction, reward, final)
+        action = newaction
+    print("Episode %d finished after %d steps") #% (i, len(path)
+
+# while (True):
+#    estado, recompensa = connection.get_state_reward(conexao, act[0])
+#   print("Estado: ", estado)
+#  print("Recompensa: ", recompensa)
+# 
+# plataforma, direcao = int(estado[:7], 2),int(estado[:7], 2)
+# print("Plataforma: ", plataforma)
+# print("Direcao: ", direcao)
