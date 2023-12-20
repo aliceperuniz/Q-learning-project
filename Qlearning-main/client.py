@@ -16,8 +16,8 @@ class QLearning:
     def best_action(self, estado):
         return np.argmax(self.matriz_resultado[estado]) # Retorna o índice da ação com o maior valor na matriz_resultado para o estado dado.
 
-    def choose_action(self, estado, aleatoriedade):
-        if rd.random() < aleatoriedade: 
+    def choose_action(self, estado, epsilon):
+        if rd.random() < epsilon: 
             return rd.choice(self.actions) # retorna uma ação aleatória
         else:
             return self.actions[self.best_action(estado)] # retorna a ação com a maior utilidade estimada
@@ -25,11 +25,11 @@ class QLearning:
     def executar(self):
         conexao = cn.connect(2037)
         estado_atual = 0
-        aleatoriedade = 0.1 # a probabilidade de escolher uma ação aleatória vai ser de 10%
+        epsilon = 0.1 # a probabilidade de escolher uma ação aleatória vai ser de 10%
 
         while True:
             print(estado_atual)
-            acao = self.choose_action(estado_atual, aleatoriedade) # chama o método choose_action para obter uma ação com base no estado atual e na aleatoriedade
+            acao = self.choose_action(estado_atual, epsilon) # chama o método choose_action para obter uma ação com base no estado atual e na aleatoriedade
             print(f'Ação escolhida para o estado {estado_atual}: {acao}')
 
             col_acao = self.actions.index(acao)
