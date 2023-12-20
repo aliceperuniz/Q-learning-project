@@ -7,54 +7,54 @@ class QLearning:
         self.alpha = alpha
         self.gamma = gamma
         self.actions = actions
-        self.matriz_utilidade = np.loadtxt('resultado.txt')
-        np.set_printoptions(precision=6)
+        self.matriz_resultado = np.loadtxt('C:/Users/Kylce/Downloads/resultado.txt')
+        np.set_printoptions(precision=6) # para imprimir os valores com 6 casas decimais
 
-    def utilidade_estado(self, next_state, reward):
-        return reward + self.gamma * max(self.matriz_utilidade[next_state])
+    def Q_values(self, next_state, reward): # equação geral para a utilidade de um estado em Q-learning (Q-values)
+        return reward + self.gamma * max(self.matriz_resultado[next_state])
 
-    def melhor_acao(self, estado):
-        return np.argmax(self.matriz_utilidade[estado])
+    def best_action(self, estado):
+        return np.argmax(self.matriz_resultado[estado]) # Retorna o índice da ação com o maior valor na matriz_resultado para o estado dado.
 
-    def escolher_acao(self, estado, aleatoriedade):
-        if rd.random() < aleatoriedade:
-            return rd.choice(self.actions)
+    def choose_action(self, estado, aleatoriedade):
+        if rd.random() < aleatoriedade: 
+            return rd.choice(self.actions) # retorna uma ação aleatória
         else:
-            return self.actions[self.melhor_acao(estado)]
+            return self.actions[self.best_action(estado)] # retorna a ação com a maior utilidade estimada
 
     def executar(self):
-        s = cn.connect(2037)
-        curr_state = 0
-        curr_reward = -14
-        aleatoriedade = 0
+        conexao = cn.connect(2037)
+        estado_atual = 0
+        aleatoriedade = 0.1 # a probabilidade de escolher uma ação aleatória vai ser de 10%
 
         while True:
-            print(curr_state)
-            acao = self.escolher_acao(curr_state, aleatoriedade)
-            print(f'Ação escolhida para o estado {curr_state}: {acao}')
+            print(estado_atual)
+            acao = self.choose_action(estado_atual, aleatoriedade) # chama o método choose_action para obter uma ação com base no estado atual e na aleatoriedade
+            print(f'Ação escolhida para o estado {estado_atual}: {acao}')
 
             col_acao = self.actions.index(acao)
+            # obtém o próximo estado e a recompensa
+            estado, recompensa = cn.get_state_reward(conexao, acao)
+            plataforma, direcao = int(estado[:7], 2),int(estado[7:], 2) # converte o estado de binário para decimal.
+            print(plataforma, direcao)
+            next_state = int(estado,2) # atualiza próximo estado
 
-            estado, recompensa = cn.get_state_reward(s, acao)
-            estado = int(estado[2:], 2)
-            next_state = estado
+            print(f'valor anterior dessa ação: {self.matriz_resultado[estado_atual][col_acao]}')
+            # Atualiza o valor da ação na matriz_resultado usando a fórmula Q-learning:
+            self.matriz_resultado[estado_atual][col_acao] += self.alpha * (self.Q_values(next_state, recompensa) - self.matriz_resultado[estado_atual][col_acao])
+            print(f'valor novo dessa ação: {self.matriz_resultado[estado_atual][col_acao]}')
 
-            print(f'valor anterior dessa ação: {self.matriz_utilidade[curr_state][col_acao]}')
-            self.matriz_utilidade[curr_state][col_acao] += self.alpha * (self.utilidade_estado(next_state, curr_reward) - self.matriz_utilidade[curr_state][col_acao])
-            print(f'valor novo dessa ação: {self.matriz_utilidade[curr_state][col_acao]}')
+            estado_atual = next_state
 
-            curr_state = next_state
-            curr_reward = recompensa
-
-            np.savetxt('resultado.txt', self.matriz_utilidade, fmt="%f")
-
+            np.savetxt('resultado.txt', self.matriz_resultado, fmt="%f") # salva a matriz_resultado em um arquivo txt
+            
 # Parâmetros
-alpha = 0.01
-gamma = 0.5
+alpha = 0.7
+gamma = 0.7
 acoes = ["left", "right", "jump"]
 
-# Criar instância da classe QLearning
+# Cria instância da classe QLearning
 agente_qlearning = QLearning(alpha, gamma, acoes)
 
-# Executar o agente Q-learning
+# Executa o agente Q-learning (loop principal)
 agente_qlearning.executar()
