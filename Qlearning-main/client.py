@@ -38,8 +38,6 @@ class QLearning:
             col_acao = self.actions.index(acao)
 
             estado, recompensa = cn.get_state_reward(conexao, acao) #obtém o próximo estado e a recompensa
-            if recompensa == -100: #com o objetivo de nao prejudicar o treinamento com os bugs do jogo
-                self.alpha = 0.1
             plataforma, direcao = int(estado[:7], 2),int(estado[7:], 2) # converte o estado de binário para decimal e separa entre plataf e direcao
             print(plataforma, direcao)
             next_state = int(estado,2) # atualiza próximo estado
